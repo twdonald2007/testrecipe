@@ -21,7 +21,7 @@
   <main>
     <section class="hero">
       <h1>用月底了，自己煮就是便宜</h1>
-      <p>輸入你的預算，從附近 100 筆節約食譜中推薦符合價格的料理。</p>
+      <p>輸入你的預算，從附近 100 筆節約食譜中推薦符合價格的料理，並能把選擇寫入 data.json。</p>
     </section>
 
     <section class="form-card">
@@ -40,16 +40,14 @@
     </section>
 
     <section class="selection" aria-live="polite">
-      <div class="selection__inner">
-        <div class="save-row">
-          <div>
-            <h2>已選擇的食譜</h2>
-            <div id="selection"></div>
-          </div>
-          <button id="saveBtn" type="button">把食譜寫入 data.json</button>
+      <div class="save-row">
+        <div>
+          <h2>已選擇的食譜</h2>
+          <div id="selection"></div>
         </div>
-        <p class="status">儲存後會直接帶你到食譜頁面查看。</p>
+        <button id="saveBtn" type="button">把食譜寫入 data.json</button>
       </div>
+      <p class="status">存入 data.json 後，可直接在 recipe.html 載入新的食譜步驟。</p>
     </section>
   </main>
 
