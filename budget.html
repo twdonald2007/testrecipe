@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>月底預算食譜推薦</title>
+  <link rel="stylesheet" href="./css/budget.css" />
+</head>
+<body>
+  <header>
+    <div class="nav" role="navigation" aria-label="主導覽">
+      <a href="./index.html" class="brand" aria-label="返回首頁">🍳 CookBook</a>
+      <div class="nav__links">
+        <a href="./index.html">首頁</a>
+        <a href="./recipe.html">食譜播放</a>
+        <a aria-current="page" href="#">預算推薦</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>用月底了，自己煮就是便宜</h1>
+      <p>輸入你的預算，從附近 100 筆節約食譜中推薦符合價格的料理。</p>
+    </section>
+
+    <section class="form-card">
+      <form id="budgetForm" class="form-row">
+        <div>
+          <label for="budget">預算（新台幣）</label>
+          <input id="budget" name="budget" type="number" min="0" placeholder="例如 150" required />
+        </div>
+        <button type="submit">開始計算</button>
+      </form>
+      <p id="status" class="status">載入中…</p>
+    </section>
+
+    <section>
+      <div class="grid" id="recipeList" aria-live="polite"></div>
+    </section>
+
+    <section class="selection" aria-live="polite">
+      <div class="selection__inner">
+        <div class="save-row">
+          <div>
+            <h2>已選擇的食譜</h2>
+            <div id="selection"></div>
+          </div>
+          <button id="saveBtn" type="button">把食譜寫入 data.json</button>
+        </div>
+        <p class="status">儲存後會直接帶你到食譜頁面查看。</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/budget.js"></script>
+</body>
+</html>
