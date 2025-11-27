@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const selectionEl = document.getElementById('selection');
   const saveBtn = document.getElementById('saveBtn');
 
+  const LOCAL_KEY = 'data.json';
+
   let recipes = [];
   let filtered = [];
   let selected = null;
@@ -130,9 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const payload = { pages };
       const text = JSON.stringify(payload, null, 2);
-      localStorage.setItem('cookbook-data.json', text);
+      localStorage.setItem(LOCAL_KEY, text);
 
-      renderStatus('已把 ingredients 與 steps 寫入 data.json（儲存在本機），請在 recipe.html 觀看。');
+      renderStatus('已把 ingredients 與 steps 寫入 data.json（儲存在本機），準備前往食譜頁面。');
+      setTimeout(() => {
+        window.location.href = './recipe.html';
+      }, 150);
     } catch (err) {
       console.error(err);
       renderStatus('儲存失敗，請稍後再試。');

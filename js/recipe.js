@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== 設定 =====
   // 預設改為讀取當前專案下的 data.json，避免遠端連結看不到最新變更
   const DEFAULT_DATA_URL = './json/data.json';
-  const LOCAL_KEY = 'cookbook-data.json';
+  const LOCAL_KEY = 'data.json';
 
   // ===== DOM =====
   const $content = document.getElementById('content');
