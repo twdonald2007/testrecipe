@@ -4,7 +4,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // ===== 設定 =====
-  const DEFAULT_DATA_URL = 'https://twdonald2007.github.io/test1/json/data.json'; // 從本地 data.json 讀取
+  // 預設改為讀取當前專案下的 data.json，避免遠端連結看不到最新變更
+  const DEFAULT_DATA_URL = './json/data.json';
+  const LOCAL_KEY = 'cookbook-data.json';
 
   // ===== DOM =====
   const $content = document.getElementById('content');
@@ -104,14 +106,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== 初始化 =====
   (async function bootstrap() {
     try {
-      const resp = await fetch(dataUrl, { cache: 'no-store' });
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const json = await resp.json();
+      const local = localStorage.getItem(LOCAL_KEY);
+      if (local) {
+        const parsed = JSON.parse(local);
+        if (Array.isArray(parsed)) PAGES = parsed;
+        else if (parsed && Array.isArray(parsed.pages)) PAGES = parsed.pages;
+        else throw new Error('localStorage data.json 結構不正確');
+      } else {
+        const resp = await fetch(dataUrl, { cache: 'no-store' });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const json = await resp.json();
 
-      if (!Array.isArray(json))
-        throw new Error('JSON 格式錯誤：頂層必須是陣列');
-
-      PAGES = json;
+        if (Array.isArray(json)) {
+          PAGES = json;
+        } else if (json && Array.isArray(json.pages)) {
+          PAGES = json.pages;
+        } else {
+          throw new Error('JSON 格式錯誤：必須是陣列或含 pages 的物件');
+        }
+      }
     } catch (err) {
       console.error('[recipe.js] 無法讀取 JSON：', err);
       PAGES = []; // 沒資料 → 不放 fallback
