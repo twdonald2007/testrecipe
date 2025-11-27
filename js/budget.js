@@ -133,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('cookbook-data.json', text);
 
       renderStatus('已把 ingredients 與 steps 寫入 data.json（儲存在本機），請在 recipe.html 觀看。');
+      window.location.assign("./recipe.html");
     } catch (err) {
       console.error(err);
       renderStatus('儲存失敗，請稍後再試。');
