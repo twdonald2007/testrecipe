@@ -32,7 +32,7 @@ header {
 .nav a { color: var(--green); text-decoration: none; padding: 8px 12px; border: 2px solid transparent; }
 .nav a[aria-current="page"], .nav a:hover { background: var(--green); color: var(--cream); border-color: var(--green); }
 
-main { max-width: 1080px; margin: 0 auto; padding: 20px; }
+main { max-width: 1080px; margin: 0 auto; padding: 20px; padding-bottom: 160px; }
 
 .hero { background: var(--cream-2); border: 3px solid var(--green); box-shadow: var(--shadow); padding: 18px; }
 .hero h1 { margin: 0 0 8px; font-size: clamp(26px, 3vw + 12px, 42px); }
@@ -52,7 +52,7 @@ main { max-width: 1080px; margin: 0 auto; padding: 20px; }
 .card .meta { display: flex; gap: 8px; flex-wrap: wrap; color: var(--muted); font-size: 13px; }
 .card button { justify-self: start; padding: 8px 10px; border: 2px solid var(--green); background: #fff; cursor: pointer; }
 
-.selection { margin-top: 20px; padding: 14px; border: 3px solid var(--green); background: #fff; box-shadow: var(--shadow); }
+.selection { margin-top: 20px; padding: 14px; border: 3px solid var(--green); background: #fff; box-shadow: var(--shadow); position: sticky; bottom: 12px; z-index: 5; }
 .selection h2 { margin-top: 0; }
 .selection__empty { color: var(--muted); }
 .save-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }

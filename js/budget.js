@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let recipes = [];
   let filtered = [];
   let selected = null;
+  let details = null;
 
   function renderStatus(msg) {
     statusEl.textContent = msg;
@@ -64,6 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  async function fetchDetails() {
+    if (details) return details;
+    const resp = await fetch('./json/budget-recipes-details.json', { cache: 'no-store' });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    details = await resp.json();
+    return details;
+  }
+
   function filterByBudget(budget) {
     if (!recipes.length) return;
     if (!budget || budget <= 0) {
@@ -100,41 +109,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const resp = await fetch('./json/data.json', { cache: 'no-store' });
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const base = await resp.json();
-      const payload = Array.isArray(base)
-        ? { pages: base, budgetSelections: [] }
-        : { pages: base.pages || [], budgetSelections: base.budgetSelections || [] };
+      const detailList = await fetchDetails();
+      const match = detailList.find(it => it.id === selected.id) || {};
+      const ingredients = match.ingredients || selected.ingredients || [];
+      const steps = match.steps || [];
 
-      const userBudget = Number(budgetInput.value) || selected.estimatedCost;
-      payload.budgetSelections.push({
-        id: selected.id,
-        name: selected.name,
-        estimatedCost: selected.estimatedCost,
-        userBudget,
-        duration: selected.duration,
-        servings: selected.servings,
-        tags: selected.tags,
-        summary: selected.summary,
-        savedAt: new Date().toISOString()
-      });
+      const pages = [];
+      if (ingredients.length) {
+        pages.push(ingredients.map((item, idx) => ({
+          step: `食材 ${idx + 1}`,
+          narrate: item
+        })));
+      }
+      if (steps.length) {
+        pages.push(steps.map((item, idx) => ({
+          step: `步驟 ${idx + 1}`,
+          narrate: item
+        })));
+      }
 
+      const payload = { pages };
       const text = JSON.stringify(payload, null, 2);
-      localStorage.setItem('cookbook-budget-data', text);
+      localStorage.setItem('cookbook-data.json', text);
 
-      const blob = new Blob([text], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'data.json';
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-
-      renderStatus('已把食譜寫入 data.json 並觸發下載，可覆蓋你的資料檔。');
+      renderStatus('已把 ingredients 與 steps 寫入 data.json（儲存在本機），請在 recipe.html 觀看。');
     } catch (err) {
       console.error(err);
       renderStatus('儲存失敗，請稍後再試。');

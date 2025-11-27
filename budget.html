@@ -39,7 +39,7 @@
       <div class="grid" id="recipeList" aria-live="polite"></div>
     </section>
 
-    <section class="selection">
+    <section class="selection" aria-live="polite">
       <div class="save-row">
         <div>
           <h2>已選擇的食譜</h2>
@@ -47,7 +47,7 @@
         </div>
         <button id="saveBtn" type="button">把食譜寫入 data.json</button>
       </div>
-      <p class="status">下載後的 data.json 可直接覆蓋至 <code>/json/data.json</code>。</p>
+      <p class="status">存入 data.json 後，可直接在 recipe.html 載入新的食譜步驟。</p>
     </section>
   </main>
 
